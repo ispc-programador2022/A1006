@@ -1,0 +1,59 @@
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+import xlrd
+import csv
+
+url= 'https://www.carone.com.ar/categoria-producto/usados/'
+pag=requests.get(url)
+soup=BeautifulSoup(pag.content, 'html.parser')
+
+#Nombre
+nombre =soup.find_all('h2', class_='p-marca')
+nombre_autos_usados = list()
+count=0
+for i in nombre:
+    if count <11:
+        nombre_autos_usados.append(i.text)
+    else:
+         break
+    count+=1
+#print(nombre_autos_usados)
+
+#Precios de los autos
+precio=soup.find_all('span', class_='woocommerce-Price-amount amount')
+precio_autos_usados= list()
+count=0
+for i in precio:
+    if count <11:
+         precio_autos_usados.append(i.text)
+    else:
+         break
+    count+=1
+#print(precio_autos_usados)
+
+
+#Detalle
+detalle=soup.find_all('p', class_='p-modelo')
+detalle_autos_usados= list()
+count=0
+for i in detalle:
+    if count <11:
+         detalle_autos_usados.append(i.text)
+    else:
+         break
+    count+=1
+
+#print(detalle_autos_usados)
+
+#Para guardar en CSV 
+
+df = pd.DataFrame({"Nombre":nombre_autos_usados,"Precio":precio_autos_usados,"Detalle":detalle_autos_usados})
+df.to_csv('autosusados_carone.cvs', index='False')
+df2 = df.to_dict('records')
+print(df2)
+
+#Para extraer excel.
+df.to_excel('autosusados_carone.xlsx', index='False')
+df3 = df.to_dict('list')
+print(df3)
