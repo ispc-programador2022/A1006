@@ -22,7 +22,7 @@ mod_lista=[]
 page = BeautifulSoup(driver.page_source,'html.parser')
 
 
-for i in range(2):
+for i in range(3):
     for auto in page.findAll('li', attrs={'data-aut-id':'itemBox', 'data-aut-category-id':'378', 'class':'_1DNjI'}):
         precio = auto.find('span', attrs ={'class':"_2Ks63", 'data-aut-id':'itemPrice'})
         if precio:
