@@ -48,4 +48,5 @@ for i in range(3):
 #print(precio_lista)
 df= pd.DataFrame({'Precio': precio_lista, 'Kilometraje': km_lista, 'Modelo':mod_lista})
 df.to_excel('OLX_autos_venta.xlsx', index=False)
+df.to_csv('OLX_autos_venta.csv',indes=False)
 print(df)
