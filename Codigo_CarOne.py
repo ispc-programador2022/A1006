@@ -42,9 +42,9 @@ def Codigo_CarOneZ(z):
   
   df=pd.DataFrame({"Nombre":autos_usados, "Precio": precios, "Detalle": detalles}, index=list(range(1,12)))
   y = input("¿Como se llamara el archivo?: ")
-  df.to_excel(y, index=False)
+  df.to_csv(y, index=False)
 
-print("Cuando el programa le indique ingrese el nombre del archivo con la extension .xlsx")
+print("Cuando el programa le indique ingrese el nombre del archivo con la extension .csv")
 for i in range(2):
   a=i+1
   z=str(a)
