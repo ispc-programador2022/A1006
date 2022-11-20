@@ -14,15 +14,14 @@ ubicacion = "./chromedriver.exe" #Ruta del driver
 driver = webdriver.Chrome(ubicacion)
 
 driver.get("https://www.olx.com.ar/autos_c378")
+page = BeautifulSoup(driver.page_source,'html.parser')
 
 precio_lista=[]
 km_lista =[]
 mod_lista=[]
 
-page = BeautifulSoup(driver.page_source,'html.parser')
 
-
-for i in range(3):
+def func():
     for auto in page.findAll('li', attrs={'data-aut-id':'itemBox', 'data-aut-category-id':'378', 'class':'_1DNjI'}):
         precio = auto.find('span', attrs ={'class':"_2Ks63", 'data-aut-id':'itemPrice'})
         if precio:
@@ -40,13 +39,17 @@ for i in range(3):
             mod_lista.append(mod.text)
         else:
             mod_lista.append('')
-  
-    next_btn=driver.find_element(By.XPATH,'//li/div/button')
-    next_btn.click
-    sleep(2)
+
+
+for i in range(3):
+    func()
+    next_btn=driver.find_element(By.TAG_NAME,'button')
+    next_btn.click()
+    sleep(4)
+    
 
 #print(precio_lista)
 df= pd.DataFrame({'Precio': precio_lista, 'Kilometraje': km_lista, 'Modelo':mod_lista})
 df.to_excel('OLX_autos_venta.xlsx', index=False)
-df.to_csv('OLX_autos_venta.csv',indes=False)
+df.to_csv('OLX_autos_venta.csv', index=False)
 print(df)
